@@ -1,53 +1,107 @@
 MORSE_CODE = {
-    '.-': 'A', '-...': 'B', '-.-.': 'C', '-..': 'D', '.': 'E',
-    '..-.': 'F', '--.': 'G', '....': 'H', '..': 'I', '.---': 'J',
-    '-.-': 'K', '.-..': 'L', '--': 'M', '-.': 'N', '---': 'O',
-    '.--.': 'P', '--.-': 'Q', '.-.': 'R', '...': 'S', '-': 'T',
-    '..-': 'U', '...-': 'V', '.--': 'W', '-..-': 'X', '-.--': 'Y',
-    '--..': 'Z', '.----': '1', '..---': '2', '...--': '3', '....-': '4',
-    '.....': '5', '-....': '6', '--...': '7', '---..': '8', '----.': '9',
-    '-----': '0', '--..--': ',', '.-.-.-': '.', '..--..': '?', '-..-.': '/',
-    '-....-': '-', '-.--.': '(', '-.--.-': ')', '.-...': '&', '---...': ':',
-    '-.-.-.': ';', '-...-': '=', '.-.-.': '+', '-....-': '-', '..--.-': '_',
-    '.-..-.': '"', '...-..-': '$', '.--.-.': '@', '...---...': 'SOS'
+    ".-": "A",
+    "-...": "B",
+    "-.-.": "C",
+    "-..": "D",
+    ".": "E",
+    "..-.": "F",
+    "--.": "G",
+    "....": "H",
+    "..": "I",
+    ".---": "J",
+    "-.-": "K",
+    ".-..": "L",
+    "--": "M",
+    "-.": "N",
+    "---": "O",
+    ".--.": "P",
+    "--.-": "Q",
+    ".-.": "R",
+    "...": "S",
+    "-": "T",
+    "..-": "U",
+    "...-": "V",
+    ".--": "W",
+    "-..-": "X",
+    "-.--": "Y",
+    "--..": "Z",
+    "-----": "0",
+    ".----": "1",
+    "..---": "2",
+    "...--": "3",
+    "....-": "4",
+    ".....": "5",
+    "-....": "6",
+    "--...": "7",
+    "---..": "8",
+    "----.": "9",
+    ".-.-.-": ".",
+    "--..--": ",",
+    "..--..": "?",
+    ".----.": "'",
+    "-.-.--": "!",
+    "-..-.": "/",
+    "-.--.": "(",
+    "-.--.-": ")",
+    ".-...": "&",
+    "---...": ":",
+    "-.-.-.": ";",
+    "-...-": "=",
+    ".-.-.": "+",
+    "-....-": "-",
+    "..--.-": "_",
+    ".-..-.": '"',
+    "...-..-": "$",
+    ".--.-.": "@",
+    "...---...": "SOS"
 }
 
-def decodeBits(bits):
-    # Determine the transmission rate
-    min_time_unit = float('inf')
-    i = 0
-    while i < len(bits):
-        if bits[i] == '1':
-            j = i + 1
-            while j < len(bits) and bits[j] == '0':
-                j += 1
-            if j - i < min_time_unit:
-                min_time_unit = j - i
-            i = j
-        else:
-            i += 1
-
-    time_unit = min_time_unit // 1  # Round down to the nearest integer
-
-    # Decode the message
-    morse_code = []
-    bit_groups = bits.strip('0').split('0' * time_unit)
-    for group in bit_groups:
-        if group == '':
-            morse_code.append(' ')
-        else:
-            symbol = '.' * (group.count('1') // time_unit)
-            morse_code.append(symbol)
-
-    return ''.join(morse_code)
-
 def decodeMorse(morseCode):
-    # Convert Morse code to human-readable string
-    morse_words = morseCode.strip().split('   ')
-    decoded_message = []
-    for word in morse_words:
-        morse_letters = word.split(' ')
-        decoded_letters = [MORSE_CODE[letter] for letter in morse_letters if letter in MORSE_CODE]
-        decoded_message.append(''.join(decoded_letters))
+    result = ""
+    for word in morseCode:
+        decoded_word = ""
+        for char in word:
+            decoded_word += MORSE_CODE[char]
+        result += decoded_word + " "
+    return result
 
-    return ' '.join(decoded_message)
+def decodeBits(bits):
+    sentence = []
+    word = []
+    current_length = 0
+    current_char = bits[0]
+    char = ""
+    ans = 0
+    for i in range(len(bits)):
+        if current_char == bits[i]:
+            current_length += 1
+        else:
+            if current_char == "1":
+                if current_length == 2:
+                    char += "."
+                elif current_length == 6:
+                    char += "-"
+            else:
+                if current_length == 2:
+                    pass
+                elif current_length == 6:
+                    word.append(char)
+                    char = ""
+                elif word:
+                    word.append(char)
+                    sentence.append(word)
+                    char = ""
+                    word = []
+            current_length = 1
+            current_char = bits[i]
+    if current_char == "1":
+        if current_length == 2:
+            word.append(char + ".")
+        else:
+            word.append(char + "-")
+        sentence.append(word)
+    return sentence
+
+decoded_morse = decodeMorse(decodeBits("1100110011001100000011000000111111001100111111001111110000000000000011001111110011111100111111000000110011001111110000001111110011001100000011"))
+print(decoded_morse)
+
