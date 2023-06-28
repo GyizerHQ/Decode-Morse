@@ -1,3 +1,30 @@
+# Assignment by Jitender
+
+Introduction of Jitender:
+Hi
+Greetings of the day.
+I hope this pull request finds you well.
+My name is Jitender and I am a recent graduate of kurukshetra university with a Bachelor of Technology in Computer Science with aggregate SGPA 8.6 out of 10. I have always been passionate about coding languages.
+
+I am proficient in a variety of programming languages, including Python, Java, R, C++ and SQL for Database and frontend for website. I am also familiar with a variety of data science tools and techniques and all the computer science subjects like OOPS, DSA, OS, DBMS, CN etc. 
+
+I am also a hard worker and I am eager to learn. I am available to start working immediately. 
+
+I am available for any job role related to my background and also available to meet at your convenience to discuss my strength. 
+
+Thank you for your time and consideration. 
+
+Thanks and Regards 
+Jitender 
+jitendertyagi2000@gmail.com 
+8307212098
+
+
+
+
+
+
+
 Electric telegraph is operated on a 2-wire line with a key that, when pressed, connects the wires together, which can be detected on a remote station. The Morse code encodes every character being transmitted as a sequence of "dots" (short presses on the key) and "dashes" (long presses on the key).
 
 When transmitting the Morse code, the international standard specifies that:
